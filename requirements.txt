@@ -1,0 +1,12 @@
+# Core dependencies
+diagrams==0.24.4
+groq==0.4.1
+python-dotenv==1.0.0
+
+# Agentic AI frameworks
+langgraph==0.6.7
+langchain==0.3.27
+langchain-community==0.3.29
+
+# Visualization
+requests==2.32.5

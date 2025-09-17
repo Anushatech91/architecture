@@ -1,0 +1,30 @@
+flowchart TB
+    subgraph Frontend_Layer
+        frontend_layer["frontend_layer"]
+    end
+    subgraph Service_Layer
+        auth_auth_service["auth_auth_service"]
+        services_order_service["services_order_service"]
+        services_user_service["services_user_service"]
+    end
+    subgraph Data_Layer
+        cache_layer["cache_layer"]
+        database_layer["database_layer"]
+        queue_layer["queue_layer"]
+    end
+    auth_auth_service --> services_order_service
+    auth_auth_service --> services_user_service
+    services_order_service --> database_layer
+    services_order_service --> cache_layer
+    services_order_service --> queue_layer
+    services_order_service --> gateway_api_gateway
+    services_user_service --> database_layer
+    services_user_service --> cache_layer
+    services_user_service --> queue_layer
+    services_user_service --> gateway_api_gateway
+    gateway_api_gateway --> services_order_service
+    gateway_api_gateway --> services_user_service
+    frontend_layer --> services_order_service
+    frontend_layer --> services_user_service
+    services_order_service --> auth_auth_service
+    services_user_service --> auth_auth_service

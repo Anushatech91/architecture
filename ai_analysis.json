@@ -1,0 +1,95 @@
+{
+  "components": {
+    "auth_auth_service": "service",
+    "services_order_service": "service",
+    "services_user_service": "service",
+    "gateway_api_gateway": "gateway|service",
+    "cache_layer": "cache",
+    "database_layer": "database",
+    "queue_layer": "queue",
+    "frontend_layer": "frontend"
+  },
+  "relationships": [
+    {
+      "from": "auth_auth_service",
+      "to": "services_order_service",
+      "type": "uses"
+    },
+    {
+      "from": "auth_auth_service",
+      "to": "services_user_service",
+      "type": "uses"
+    },
+    {
+      "from": "services_order_service",
+      "to": "database_layer",
+      "type": "uses"
+    },
+    {
+      "from": "services_order_service",
+      "to": "cache_layer",
+      "type": "uses"
+    },
+    {
+      "from": "services_order_service",
+      "to": "queue_layer",
+      "type": "publishes"
+    },
+    {
+      "from": "services_order_service",
+      "to": "gateway_api_gateway",
+      "type": "routes"
+    },
+    {
+      "from": "services_user_service",
+      "to": "database_layer",
+      "type": "uses"
+    },
+    {
+      "from": "services_user_service",
+      "to": "cache_layer",
+      "type": "uses"
+    },
+    {
+      "from": "services_user_service",
+      "to": "queue_layer",
+      "type": "publishes"
+    },
+    {
+      "from": "services_user_service",
+      "to": "gateway_api_gateway",
+      "type": "routes"
+    },
+    {
+      "from": "gateway_api_gateway",
+      "to": "services_order_service",
+      "type": "calls"
+    },
+    {
+      "from": "gateway_api_gateway",
+      "to": "services_user_service",
+      "type": "calls"
+    },
+    {
+      "from": "frontend_layer",
+      "to": "services_order_service",
+      "type": "calls"
+    },
+    {
+      "from": "frontend_layer",
+      "to": "services_user_service",
+      "type": "calls"
+    },
+    {
+      "from": "services_order_service",
+      "to": "auth_auth_service",
+      "type": "authenticates"
+    },
+    {
+      "from": "services_user_service",
+      "to": "auth_auth_service",
+      "type": "authenticates"
+    }
+  ],
+  "mermaid_code": "flowchart TB\n    subgraph Frontend_Layer\n        frontend_layer[\"frontend_layer\"]\n    end\n    subgraph Service_Layer\n        auth_auth_service[\"auth_auth_service\"]\n        services_order_service[\"services_order_service\"]\n        services_user_service[\"services_user_service\"]\n    end\n    subgraph Data_Layer\n        cache_layer[\"cache_layer\"]\n        database_layer[\"database_layer\"]\n        queue_layer[\"queue_layer\"]\n    end\n    auth_auth_service --> services_order_service\n    auth_auth_service --> services_user_service\n    services_order_service --> database_layer\n    services_order_service --> cache_layer\n    services_order_service --> queue_layer\n    services_order_service --> gateway_api_gateway\n    services_user_service --> database_layer\n    services_user_service --> cache_layer\n    services_user_service --> queue_layer\n    services_user_service --> gateway_api_gateway\n    gateway_api_gateway --> services_order_service\n    gateway_api_gateway --> services_user_service\n    frontend_layer --> services_order_service\n    frontend_layer --> services_user_service\n    services_order_service --> auth_auth_service\n    services_user_service --> auth_auth_service"
+}
